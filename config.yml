@@ -1,3 +1,36 @@
 # Set this to true if your ranking system uses a prestige system 
 # EX: You start at E-lvl recruit rank to E-Lvl brigadier then reset to D-Lvl recruit
 prestige: true
+
+# levels for your prestige if used, otherwise ignore this section.
+# EX: For E-Lvl I use e. If I wanted a prestige called High I could use high.
+prestigeLevls:
+    - e
+    - d
+    - c
+    - b
+    - a
+    - s
+    - ss
+    
+# Money needed for prestige true or false
+prestigeMoney: true
+
+# Set this false if you will charge the same amount for each prestige, true if you want a dynamic amount
+presMonChange: false
+
+# Money amount for constant amount
+presMonConst: 320000
+
+# Money for dynamic amount. If the number of amounts here is less than the number of prestiges 
+presMonDyn:
+    - 100000
+    - 200000
+# List of your ranks that will be used for the permissions check
+ranks:
+    - corporal
+    - sergeant
+    - lieutenant
+    - major
+    - colonel
+    - brigadier
