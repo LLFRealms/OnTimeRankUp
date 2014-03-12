@@ -1,0 +1,3 @@
+# Set this to true if your ranking system uses a prestige system 
+# EX: You start at E-lvl recruit rank to E-Lvl brigadier then reset to D-Lvl recruit
+prestige: true

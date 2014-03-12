@@ -1,0 +1,17 @@
+name: OnTimeRankUp
+author: L337Lobster
+website: http://llfrealms.com
+main: com.llfrealms.OnTimeRankUp.OnTimeRankUp
+depend: [OnTime, Vault]
+version: 1.0
+description: Ranks players up by checking a players on time compared to the requirements for a rank-up and then checks to make sure they have enough money. If one or neither is true, they are told which. If both are true, the player is asked if they would like to ranked up.
+prefix: LLFTime
+
+commands:
+    rankup:
+        description: Check to see if you can rank-up
+        aliases: ru
+        usage: Simply type /rankup or /ru
+    acceptru:
+        description: Accept a rankup after using the /rankup command.
+        usage: Simply type /accept
