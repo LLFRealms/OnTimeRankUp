@@ -1,6 +1,7 @@
 package com.llfrealms.OnTimeRankUp;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,57 +21,66 @@ import com.llfrealms.util.Utilities;
 
 public final class OnTimeRankUp extends JavaPlugin
 {
-	public CommandSender consoleMessage = Bukkit.getConsoleSender();
+	public CommandSender consoleMessage = Bukkit.getConsoleSender(); //for sending things to or as the console
 	
-	public static Economy economy = null;
-	public static Permission permission = null;
+	public static Economy economy = null; //for Vault
+	public static Permission permission = null; //for Vault
 	
-	PluginDescriptionFile descFile = this.getDescription(); 
-	public String pluginname = descFile.getPrefix();
-	public String logPrefix = "&f[&5"+pluginname+"&f]&e";
+	PluginDescriptionFile descFile = this.getDescription(); //grabs info from plugin.yml
+	public String pluginname = descFile.getPrefix(); //name of the plugin, uses prefix due to length of actual name
+	public String logPrefix = "&f[&5"+pluginname+"&f]&e"; //prefix for custom log
 	
-	public float presMonConst;
-	public String permSetUp = this.getConfig().getString("permSetUp");
-	private boolean prestige = false, presMon = false, presMonChange;
-	public Map<String, String> presLvls;
-	public List<String> ranks;
-	public List<Float> rankMon;
-	public Map<String, Float> presMonDyn;
-	public Map<String, List<Float>> rankReqs, rankMoney;
-	
+	public String permSetUp = this.getConfig().getString("permSetUp"); //
+	private boolean prestige = false, presMon = false, presMonChange = false; //checks to see if using prestiges, money for prestiges, and if the money is dynamic or static
+	public Map<String, String> presLvlsComb = new HashMap<String, String>(); //holds the list of prestiges and their lvl marker i.e. (lvl1, e)
+	public List<String> ranks = new ArrayList<String>(), presLvlLevels = new ArrayList<String>(); //holds the list of ranks, list of the prestige lvls, i.e. lvl1, lvl2, lvl3, etc
+	public double presMonValue; //holds the money value for static value prestige
+	public Map<String, Double> presMonDyn = new HashMap<String, Double>(); //holds money value for dynamic  value prestige
 	
 	public void onEnable()
 	{
+		sendLog("OnTimeRankUp is attempting to load");
 		this.saveDefaultConfig();
     	this.getConfig();
     	ranks = this.getConfig().getStringList("ranks");
-		setupEconomy();
-		setupPermissions();
-		ORTUSetUp();
+    	prestige = this.getConfig().getBoolean("prestige");
+		setupEconomy(); //vault
+		setupPermissions(); //vault
+		PresSetUp(); //setup prestige variablees
+		sendLog("OnTimeRankUp sucessfully loaded!");
 		
 	}
 	public void onDisable()
 	{
 		
 	}
-	private void ORTUSetUp()
+	private void PresSetUp()
 	{
 		if(prestige)
 		{
 			int i = 1;
 			Set<String> lvl = this.getConfig().getConfigurationSection("prestigeLevels").getKeys(false);
 			List<String> pres = new ArrayList<String>();
-			while(this.getConfig().getString("prestigeLevels."+i) != null)
-			{	
-				String temp = this.getConfig().getString("prestigeLevels."+i);
-				pres.add(temp);
+			sendLog("Attempting to gather Prestige Levels");
+			while(this.getConfig().getString("prestigeLevels.lvl"+i) != null)
+			{
+				String temp = this.getConfig().getString("prestigeLevels.lvl"+i);
+				pres.add((i-1),temp);
 				i++;
 			}
 			i = 0;
 			for(String s: lvl)
 			{
-				presLvls.put(s, pres.get(i));
+				presLvlsComb.put(s, pres.get(i));
 				i++;
+			}
+			if(presLvlsComb.isEmpty())
+			{
+				sendLog("Prestige Levels not loaded. Sad Face.");
+			}
+			else
+			{
+				sendLog("Prestige Levels sucessfully loaded!");
 			}
 			presMon = this.getConfig().getBoolean("prestigeMoney");
 			if(presMon)
@@ -84,9 +94,28 @@ public final class OnTimeRankUp extends JavaPlugin
 		}
 		if(presMon)
 		{
+			sendLog("Attempting to load prestige money requirements.");
 			if(presMonChange)
 			{
-				
+				int j = 1;
+				for(int i=0; i < presLvlsComb.size(); i++)
+				{
+					String path = "presMonDyn.lvl"+j;
+					presMonDyn.put("lvl"+j, this.getConfig().getDouble(path));
+					j++;
+				}				
+			}
+			else
+			{
+				presMonValue = this.getConfig().getDouble("presMonConst");
+			}
+			if(presMonDyn.isEmpty())
+			{
+				sendLog("Prestige money requirements not loaded. Sad Face.");
+			}
+			else
+			{
+				sendLog("Prestige money requirements sucessfully loaded!");
 			}
 		}
 	}

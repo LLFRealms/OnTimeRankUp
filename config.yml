@@ -4,14 +4,14 @@ prestige: true
 
 # levels for your prestige if used, otherwise ignore this section.
 # EX: For E-Lvl I use e. If I wanted a prestige called High I could use high.
-prestigeLevls:
+prestigeLevels:
     lvl1: e
-	lvl2: d
-	lvl3: c
-	lvl4: b
-	lvl5: a
-	lvl6: s
-	lvl7: ss
+    lvl2: d
+    lvl3: c
+    lvl4: b
+    lvl5: a
+    lvl6: s
+    lvl7: ss
     
 # Money needed for prestige true or false
 prestigeMoney: true
@@ -22,14 +22,16 @@ presMonChange: false
 # Money amount for constant amount
 presMonConst: 320000
 
-# Money for dynamic amount. If the number of amounts here is less than the number of prestiges
-# the last number will be used for subsequent prestiges. Each level should simply increase by one. 
-# number gaps will work. I.e. lvl1: 10 followed by lvl4 30. Levels 2 and 3 will use the value for level 1.
+# Money for dynamic amount. Each level should simply increase by one. 
 # This section is only even looked at if presMonChange is set to true.
 presMonDyn:
     lvl1: 100000
-	lvl2: 200000
-	lvl3: 300000
+    lvl2: 200000
+    lvl3: 300000
+    lvl4: 400000
+    lvl5: 500000
+    lvl6: 600000
+    lvl7: 700000
 
 # List of your ranks that will be used for the permissions check. Ranks listed in ascending order and the top rank is used only for prestige.
 # i.e. no time check for E-Lvl brigadier to D-lvl recruit or D-Lvl brigadier to C-lvl recruit and so on.
@@ -42,19 +44,34 @@ ranks:
     - colonel
     - brigadier
 
-# requirements for the ranks should be in this format. lvl can be ignored if not using prestige. Time should be in minutes.
+# requirements for the ranks should be in this format. lvl can be ignored if not using prestige. Time should be in minutes. Money can be 0.
 # non-prestige example:
 # corporal:
 #   money: $$$$
 #   time: ####
 rankReq:
-	corporal:
-		lvl1: e
-			money: $$$$
-			time: ####
-		lvl2: d
-			money: $$$$
-			time: ####
+    corporal:
+        lvl1:
+            money: $$$$
+            time: ####
+        lvl2:
+            money: $$$$
+            time: ####
+        lvl3:
+            money: $$$$
+            time: ####
+        lvl4:
+            money: $$$$
+            time: ####
+        lvl5:
+            money: $$$$
+            time: ####
+        lvl6:
+            money: $$$$
+            time: ####
+        lvl7:
+            money: $$$$
+            time: ####
 
 # How will your permission for the ranks look? r = rank and p = prestige
 # default is rp. The permission would look like rank.prestige EX: corporal.e
