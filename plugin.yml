@@ -11,7 +11,4 @@ commands:
     rankup:
         description: Check to see if you can rank-up
         aliases: ru
-        usage: Simply type /rankup or /ru
-    acceptru:
-        description: Accept a rankup after using the /rankup command.
-        usage: Simply type /accept
+        usage: Simply type /rankup check or /ru check

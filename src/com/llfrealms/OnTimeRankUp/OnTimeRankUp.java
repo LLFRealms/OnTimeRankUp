@@ -17,6 +17,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.llfrealms.util.Utilities;
+import com.llfrealms.OnTimeRankUp.Commands;
 
 
 public final class OnTimeRankUp extends JavaPlugin
@@ -30,8 +31,8 @@ public final class OnTimeRankUp extends JavaPlugin
 	public String pluginname = descFile.getPrefix(); //name of the plugin, uses prefix due to length of actual name
 	public String logPrefix = "&f[&5"+pluginname+"&f]&e"; //prefix for custom log
 	
-	public String permSetUp = this.getConfig().getString("permSetUp"); //
-	private boolean prestige = false, presMon = false, presMonChange = false; //checks to see if using prestiges, money for prestiges, and if the money is dynamic or static
+	public String permSetUp = this.getConfig().getString("permSetUp"), permOption = this.getConfig().getString("permSetUp"); //
+	public boolean prestige = false, presMon = false, presMonChange = false; //checks to see if using prestiges, money for prestiges, and if the money is dynamic or static
 	public Map<String, String> presLvlsComb = new HashMap<String, String>(); //holds the list of prestiges and their lvl marker i.e. (lvl1, e)
 	public List<String> ranks = new ArrayList<String>(), presLvlLevels = new ArrayList<String>(); //holds the list of ranks, list of the prestige lvls, i.e. lvl1, lvl2, lvl3, etc
 	public double presMonValue; //holds the money value for static value prestige
@@ -42,11 +43,13 @@ public final class OnTimeRankUp extends JavaPlugin
 		sendLog("OnTimeRankUp is attempting to load");
 		this.saveDefaultConfig();
     	this.getConfig();
+    	sendLog("Loading commands");
+    	getCommand("rankup").setExecutor(new Commands(this));
     	ranks = this.getConfig().getStringList("ranks");
     	prestige = this.getConfig().getBoolean("prestige");
 		setupEconomy(); //vault
 		setupPermissions(); //vault
-		PresSetUp(); //setup prestige variablees
+		PresSetUp(); //setup prestige variables
 		sendLog("OnTimeRankUp sucessfully loaded!");
 		
 	}
@@ -71,6 +74,7 @@ public final class OnTimeRankUp extends JavaPlugin
 			i = 0;
 			for(String s: lvl)
 			{
+				presLvlLevels.add(pres.get(i));
 				presLvlsComb.put(s, pres.get(i));
 				i++;
 			}
