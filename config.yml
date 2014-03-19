@@ -49,29 +49,37 @@ ranks:
 # corporal:
 #   money: $$$$
 #   time: ####
+#   skipperm: meow.meow
 rankReq:
     corporal:
         lvl1:
             money: $$$$
             time: ####
+            skipperm: meow.meow
         lvl2:
             money: $$$$
             time: ####
+            skipperm: meow.meow
         lvl3:
             money: $$$$
             time: ####
+            skipperm: meow.meow
         lvl4:
             money: $$$$
             time: ####
+            skipperm: meow.meow
         lvl5:
             money: $$$$
             time: ####
+            skipperm: meow.meow
         lvl6:
             money: $$$$
             time: ####
+            skipperm: meow.meow
         lvl7:
             money: $$$$
             time: ####
+            skipperm: meow.meow
 
 # How will your permission for the ranks look? r = rank and p = prestige
 # default is rp. The permission would look like rank.prestige EX: corporal.e

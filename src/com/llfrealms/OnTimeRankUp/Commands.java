@@ -161,15 +161,25 @@ public class Commands implements CommandExecutor
 			}
 			else
 			{
-				if(!moneyCheck)
+				if(OnTimeRankUp.permission.has(sender, "rankReq." + rank + "."+level+".skipperm"))
 				{
-					Utilities.sendMessage(sender, "&aYou have $" + pmoney);
-					Utilities.sendMessage(sender, "&6You need $" + money);
+					Utilities.sendMessage(sender, "&9You have the rank requirement skip for this level!");
+					Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "promote " + player + " default");
+					OnTimeRankUp.economy.withdrawPlayer(player, money);
+					Utilities.sendMessage(sender, "&aCongratulations!");
 				}
-				if(!timeCheck)
+				else
 				{
-					Utilities.sendMessage(sender, "&aYou have " + timeConvert(ptime));
-					Utilities.sendMessage(sender, "&6You need " + timeConvert(time));
+					if(!moneyCheck)
+					{
+						Utilities.sendMessage(sender, "&aYou have $" + pmoney);
+						Utilities.sendMessage(sender, "&6You need $" + money);
+					}
+					 if(!timeCheck)
+					{
+						Utilities.sendMessage(sender, "&aYou have " + timeConvert(ptime));
+						Utilities.sendMessage(sender, "&6You need " + timeConvert(time));
+					}
 				}
 			}
 		}
