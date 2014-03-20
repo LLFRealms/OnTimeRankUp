@@ -45,11 +45,11 @@ public class Commands implements CommandExecutor
 		if(plugin.prestige)
 		{
 			
-			for(int i = 0; i < plugin.presLvlLevels.size(); i++)
+			for(int i = plugin.presLvlLevels.size()-1; i >= 0; i--)
 			{
-				for(int j = 0; j < plugin.ranks.size(); j++)
+				for(int j = plugin.ranks.size()-1; j >= 0; j--)
 				{
-					switch(plugin.permOption)
+					switch(plugin.permOption)//change this to get highest first
 					{
 						case "rp":
 							perm = plugin.ranks.get(j) + "." + plugin.presLvlLevels.get(i);
@@ -67,7 +67,7 @@ public class Commands implements CommandExecutor
 		}
 		else
 		{
-			for(int i = 0; i < plugin.ranks.size(); i++)
+			for(int i = plugin.ranks.size()-1; i >= 0; i--)
 			{
 				perm = plugin.ranks.get(i);
 				if(OnTimeRankUp.permission.has(sender, perm))
@@ -80,11 +80,18 @@ public class Commands implements CommandExecutor
 	}
 	public String nextRank(String rank)
 	{
-		for(int i = 0; i < plugin.ranks.size(); i++)
+		for(int i = plugin.ranks.size()-1; i >= 0; i--)
 		{
 			if(plugin.ranks.get(i).equalsIgnoreCase(rank))
 			{
-				rank = plugin.ranks.get(i+1);
+				if(rank.equalsIgnoreCase(plugin.ranks.get(plugin.ranks.size()-1)))
+				{
+					rank = plugin.ranks.get(0);
+				}
+				else
+				{
+					rank = plugin.ranks.get(i+1);
+				}
 				break;
 			}
 		}
@@ -93,18 +100,13 @@ public class Commands implements CommandExecutor
 	public String timeConvert (Double time)//convert time from miliseconds to days, hours, and minutes
 	{
 		int days, hours, minutes, seconds;
-		plugin.sendLog(time+"");
 		time /= 1000;
-		plugin.sendLog(time+"");
 		days = (int) (time/86400);
 		time -= (days*86400);
-		plugin.sendLog(time+"");
 		hours = (int) (time/3600);
 		time -= (hours*3600);
-		plugin.sendLog(time+"");
 		minutes = (int)(time/60);
 		time -= (minutes*60);
-		plugin.sendLog(time+"");
 		seconds = (int)(time/60);
 		String totalTime = days + " Days " + hours + " Hours " + minutes + " Minutes and " + seconds + " Seconds.";
 		return totalTime;
@@ -130,8 +132,16 @@ public class Commands implements CommandExecutor
 			{
 				level = Utilities.getKeyByValue(plugin.presLvlsComb, perms[0]);
 				rank = nextRank(perms[1]);
-				money = plugin.getConfig().getDouble("rankReq." + rank + "."+level+".money");
-				time = plugin.getConfig().getDouble("rankReq." + rank + "."+level+".time");
+				if(rank.equalsIgnoreCase(plugin.ranks.get(0)))
+				{
+					money = plugin.presMonValue;
+					time = 0;
+				}
+				else
+				{
+					money = plugin.getConfig().getDouble("rankReq." + rank + "."+level+".money");
+					time = plugin.getConfig().getDouble("rankReq." + rank + "."+level+".time");
+				}
 				time *= 60000;
 			}
 			ptime = OnTimeAPI.getPlayerTimeData(player, OnTimeAPI.data.TOTALPLAY);

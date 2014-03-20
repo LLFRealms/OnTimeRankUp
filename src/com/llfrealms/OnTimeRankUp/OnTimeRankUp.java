@@ -35,7 +35,7 @@ public final class OnTimeRankUp extends JavaPlugin
 	public boolean prestige = false, presMon = false, presMonChange = false; //checks to see if using prestiges, money for prestiges, and if the money is dynamic or static
 	public Map<String, String> presLvlsComb = new HashMap<String, String>(); //holds the list of prestiges and their lvl marker i.e. (lvl1, e)
 	public List<String> ranks = new ArrayList<String>(), presLvlLevels = new ArrayList<String>(); //holds the list of ranks, list of the prestige lvls, i.e. lvl1, lvl2, lvl3, etc
-	public double presMonValue; //holds the money value for static value prestige
+	public double presMonValue = 0; //holds the money value for static value prestige
 	public Map<String, Double> presMonDyn = new HashMap<String, Double>(); //holds money value for dynamic  value prestige
 	
 	public void onEnable()
@@ -92,7 +92,7 @@ public final class OnTimeRankUp extends JavaPlugin
 				presMonChange = this.getConfig().getBoolean("presMonChange");
 				if(presMonChange)
 				{
-					
+					sendLog("Dynamic prestige money currently not supported!");
 				}
 			}
 		}
@@ -111,13 +111,18 @@ public final class OnTimeRankUp extends JavaPlugin
 			}
 			else
 			{
+				sendLog("Setting constant money req for prestige");
 				presMonValue = this.getConfig().getDouble("presMonConst");
 			}
-			if(presMonDyn.isEmpty())
+			if(presMonDyn.isEmpty() && presMonChange)
 			{
 				sendLog("Prestige money requirements not loaded. Sad Face.");
 			}
-			else
+			else if(!presMonDyn.isEmpty() && presMonChange)
+			{
+				sendLog("Prestige money requirements sucessfully loaded!");
+			}
+			if(presMonValue > 0 && !presMonChange)
 			{
 				sendLog("Prestige money requirements sucessfully loaded!");
 			}
