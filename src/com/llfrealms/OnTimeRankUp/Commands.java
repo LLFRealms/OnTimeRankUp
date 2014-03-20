@@ -124,8 +124,16 @@ public class Commands implements CommandExecutor
 			{
 				level = Utilities.getKeyByValue(plugin.presLvlsComb, perms[1]);
 				rank = nextRank(perms[0]);
-				money = plugin.getConfig().getDouble("rankReq." + rank + "."+level+".money");
-				time = plugin.getConfig().getDouble("rankReq." + rank + "."+level+".time");
+				if(rank.equalsIgnoreCase(plugin.ranks.get(0)))
+				{
+					money = plugin.presMonValue;
+					time = 0;
+				}
+				else
+				{
+					money = plugin.getConfig().getDouble("rankReq." + rank + "."+level+".money");
+					time = plugin.getConfig().getDouble("rankReq." + rank + "."+level+".time");
+				}
 				time *= 60000;
 			}
 			else
